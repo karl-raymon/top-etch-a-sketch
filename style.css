@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Love+Ya+Like+A+Sister&family=Roboto:ital,wght@0,100..900;1,100..900&family=SN+Pro:ital,wght@0,200..900;1,200..900&display=swap');
+
 *,
 *::after,
 *::before {
@@ -7,8 +9,19 @@
 }
 
 body,
-.container {
+.container,
+.app,
+.header,
+.footer {
   display: flex;
+  font-family: 'Love Ya Like A Sister', cursive;
+}
+
+.app,
+.header,
+.footer {
+  flex-direction: column;
+  align-items: center;
 }
 
 body {
@@ -16,6 +29,8 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  background-image: url(./bg.jpg);
+  background-size: cover;
 }
 
 .box {
@@ -26,4 +41,35 @@ body {
 .container {
   background-color: #f4f4f4;
   flex-wrap: wrap;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+button {
+  font-family: inherit;
+  padding: 8px 24px;
+  background-color: hsl(200, 100%, 50%);
+  font-weight: 700;
+  color: #f4f4f4;
+  border-radius: 20px;
+}
+
+.header {
+  margin-bottom: 8px;
+}
+
+.footer {
+  margin-top: 8px;
+}
+
+.app {
+  background-color: rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(30px);
+  padding: 20px;
+  border-radius: 20px;
+}
+
+h1,
+h2 {
+  color: hsl(42, 23%, 17%);
 }

@@ -1,6 +1,7 @@
 const GRID_SIZE = 600;
-let rowSize = 16;
-let colSize = 16;
+let gridCells = 16;
+let isRandomized = false;
+let color = 'black';
 
 const container = document.querySelector('.container');
 container.style.width = `${GRID_SIZE}px`;
@@ -9,12 +10,12 @@ container.style.height = `${GRID_SIZE}px`;
 createGridCells();
 
 function createGridCells() {
-  for (let i = 0; i < rowSize * colSize; i++) {
+  for (let i = 0; i < gridCells * gridCells; i++) {
     const cell = document.createElement('span');
 
     cell.classList.add('box');
-    cell.style.width = `${GRID_SIZE / rowSize}px`;
-    cell.style.height = `${GRID_SIZE / colSize}px`;
+    cell.style.width = `${GRID_SIZE / gridCells}px`;
+    cell.style.height = `${GRID_SIZE / gridCells}px`;
 
     container.append(cell);
 
@@ -23,8 +24,14 @@ function createGridCells() {
 }
 
 function drawCell(event) {
-  event.target.style.backgroundColor = 'black';
+  const targetBg = event.target.style;
+  !isRandomized
+    ? (targetBg.backgroundColor = 'black')
+    : (targetBg.backgroundColor = `hsl(${Math.floor(Math.random() * 361)} 100% 50%)`);
 }
+
+const promptBtn = document.querySelector('#newSizeBtn');
+promptBtn.addEventListener('click', setNewGridSize);
 
 function setNewGridSize() {
   const size = Number(
@@ -33,12 +40,16 @@ function setNewGridSize() {
 
   rowSize = size;
   colSize = size;
-  container.innerHTML = '';
+  container.textContent = ''; //texcontent is much safer that innerHTML
   createGridCells();
 }
 
-const promptBtn = document.querySelector('#newSizeBtn');
-// promptBtn.textContent = 'Set New Size';
-// container.append(promptBtn);
+const blackBtn = document.querySelector('#black');
+const randomBtn = document.querySelector('#random');
 
-promptBtn.addEventListener('click', setNewGridSize);
+blackBtn.addEventListener('click', setPaintColor);
+randomBtn.addEventListener('click', setPaintColor);
+
+function setPaintColor(e) {
+  e.target.id === 'black' ? (isRandomized = false) : (isRandomized = true);
+}

@@ -53,8 +53,7 @@ function setNewGridSize() {
     prompt('Enter grid size you want: \nPlease enter up to 100 only!'),
   );
 
-  rowSize = size;
-  colSize = size;
+  gridCells = size;
   container.textContent = ''; //texcontent is much safer that innerHTML
   createGridCells();
 }

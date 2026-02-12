@@ -33,11 +33,6 @@ body {
   background-size: cover;
 }
 
-.box {
-  /* background-color: yellow; */
-  /* border: 1px solid black; */
-}
-
 .container {
   background-color: #f4f4f4;
   flex-wrap: wrap;

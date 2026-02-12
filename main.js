@@ -2,8 +2,10 @@ const GRID_SIZE = 600;
 let gridCells = 16;
 let isRandomized = false;
 let color = 'black';
-
+let isEraseEnabled = false;
 const container = document.querySelector('.container');
+const resetBtn = document.querySelector('#resetBtn');
+
 container.style.width = `${GRID_SIZE}px`;
 container.style.height = `${GRID_SIZE}px`;
 
@@ -24,10 +26,23 @@ function createGridCells() {
 }
 
 function drawCell(event) {
-  const targetBg = event.target.style;
-  !isRandomized
-    ? (targetBg.backgroundColor = 'black')
-    : (targetBg.backgroundColor = `hsl(${Math.floor(Math.random() * 361)} 100% 50%)`);
+  const targetStyle = event.target.style;
+  let opacity = Number(targetStyle.opacity);
+
+  if (isRandomized && !isEraseEnabled) {
+    targetStyle.backgroundColor = `hsl(${Math.floor(Math.random() * 361)} 100% 50%)`;
+
+    // console.log(typeof 0.1);
+
+    targetStyle.opacity = `${opacity === 1 ? opacity : opacity + 0.1}`;
+    console.log(targetStyle.opacity);
+  } else if (!isRandomized && isEraseEnabled === true) {
+    targetStyle.removeProperty('background-color');
+    targetStyle.removeProperty('opacity');
+  } else {
+    targetStyle.backgroundColor = 'black';
+    targetStyle.opacity = `${opacity === 1 ? opacity : opacity + 0.1}`;
+  }
 }
 
 const promptBtn = document.querySelector('#newSizeBtn');
@@ -46,10 +61,30 @@ function setNewGridSize() {
 
 const blackBtn = document.querySelector('#black');
 const randomBtn = document.querySelector('#random');
+const eraserBtn = document.querySelector('#eraser');
 
 blackBtn.addEventListener('click', setPaintColor);
 randomBtn.addEventListener('click', setPaintColor);
+eraserBtn.addEventListener('click', erasePaint);
 
 function setPaintColor(e) {
-  e.target.id === 'black' ? (isRandomized = false) : (isRandomized = true);
+  isEraseEnabled = false;
+
+  if (e.target.id === 'black') {
+    isRandomized = false;
+  } else {
+    isRandomized = true;
+  }
+}
+
+function erasePaint(e) {
+  isRandomized = false;
+  isEraseEnabled = true;
+}
+
+resetBtn.addEventListener('click', resetCanvas);
+
+function resetCanvas() {
+  container.textContent = '';
+  createGridCells();
 }
